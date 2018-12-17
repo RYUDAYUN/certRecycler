@@ -30,7 +30,6 @@ public class MainActivity extends FragmentActivity {
     LinearLayoutManager mLayoutManager;
     RecyclerViewAdapter mAdapter;
     ArrayList<String> imageArray = new ArrayList<String>();
-    ArrayList<String> hrefArray = new ArrayList<String>();
     private String htmlPageUrl = "http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx/";
 
     @Override
@@ -68,12 +67,10 @@ public class MainActivity extends FragmentActivity {
         protected Void doInBackground(Void... params) {
             try {
                 Document doc = Jsoup.connect(htmlPageUrl).get();
-                Elements links = doc.select("[src]");
+                Elements links = doc.select("img[src]");
 
                 for (Element src : links) {
-                    if (src.tagName().equals("img")) {
                         imageArray.add(src.attr("abs:src"));
-                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
