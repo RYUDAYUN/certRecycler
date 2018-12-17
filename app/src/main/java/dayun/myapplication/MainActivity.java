@@ -1,6 +1,7 @@
 package dayun.myapplication;
 
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -49,10 +50,18 @@ public class MainActivity extends FragmentActivity {
 
     private class JsoupAsyncTask extends AsyncTask<Void, Void, Void> {
 
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
+
             super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("기다려주세요");
+            progressDialog.show();
+
+
         }
 
         @Override
@@ -78,6 +87,8 @@ public class MainActivity extends FragmentActivity {
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mAdapter = new RecyclerViewAdapter(imageArray);
             mRecyclerView.setAdapter(mAdapter);
+
+            progressDialog.dismiss();
 
             Toast.makeText(MainActivity.this, "이미지 출력", Toast.LENGTH_LONG).show();
 
